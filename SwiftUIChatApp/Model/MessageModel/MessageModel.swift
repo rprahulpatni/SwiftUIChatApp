@@ -21,6 +21,16 @@ internal func getUID() -> String {
     return uid ?? "notFound"
 }
 
+internal func getUName() -> String {
+    let name = Auth.auth().currentUser?.displayName
+    return name ?? "notFound"
+}
+
+internal func getUPhoto() -> String {
+    let photoURL = Auth.auth().currentUser?.photoURL
+    return photoURL?.absoluteString ?? "notFound"
+}
+
 struct MessageModel : Codable, Hashable {
     var isread: Bool?
     var receiverId: String?

@@ -101,6 +101,8 @@ class SingleChatViewModel: ObservableObject {
     
     func handleSend(){
         let fromId = getUID()
+        let senderName = getUName()
+        let senderPhoto = getUPhoto()
         //        guard let senderName = self.loggedUser?.name else {return}
         //        guard let senderPhoto = self.loggedUser?.profilePic else {return}
         
@@ -108,39 +110,43 @@ class SingleChatViewModel: ObservableObject {
         guard let reciverName = self.chatUser?.name else {return}
         guard let reciverPhoto = self.chatUser?.profilePic else {return}
         
-        let dictObj = MessageModel(isread: true, receiverId: toId, receiverName: reciverName, receiverPhoto: reciverPhoto, senderId: fromId, senderName: "", senderPhoto: "", text: self.msgText, timestamp: "\(Date().currentTimeMillis())", msgType: MessageType.text, uploadedURL: "")
+        let dictObj = MessageModel(isread: true, receiverId: toId, receiverName: reciverName, receiverPhoto: reciverPhoto, senderId: fromId, senderName: senderName, senderPhoto: senderPhoto, text: self.msgText, timestamp: "\(Date().currentTimeMillis())", msgType: MessageType.text, uploadedURL: "")
         let dictMsgData = dictObj.convertedDictionary
         
-        let lastMsgObj = ChatListModel(isread: true, userName: reciverName, userProfilePic: reciverPhoto, userId: toId, userLastSeen: "",lastMessage: self.msgText, timestamp: "\(Date().currentTimeMillis())", msgType: MessageType.text)
-        let lastMsgData = lastMsgObj.convertedDictionary
+//        let lastMsgObj = ChatListModel(isread: true, userName: reciverName, userProfilePic: reciverPhoto, userId: toId, userLastSeen: "",lastMessage: self.msgText, timestamp: "\(Date().currentTimeMillis())", msgType: MessageType.text)
+//        let lastMsgData = lastMsgObj.convertedDictionary
         
         let chatRef = Database.database().reference(withPath: "chats")
         chatRef.child("chats").observeSingleEvent(of: .value, with: { (snapshot) in
             
-            if snapshot.hasChild(("\(toId)-\(fromId))")) {
-                print("true rooms exist")
-                //                chatRef.child(("\(toId)-\(fromId)")).childByAutoId().setValue(dictMsgData)
-                // Update message
-                chatRef.child(("\(toId)-\(fromId)")).child("messages").childByAutoId().setValue(dictMsgData)
-                // Update last message in metadata
-                chatRef.child(("\(toId)-\(fromId)")).child("metadata").child("last_message").setValue(lastMsgData)
-                
-            } else if snapshot.hasChild(("\(fromId)-\(toId)")) {
-                print("false room doesn't exist")
-                //                chatRef.child(("\(fromId)-\(toId)")).childByAutoId().setValue(dictMsgData)
-                // Update message
-                chatRef.child(("\(fromId)-\(toId)")).child("messages").childByAutoId().setValue(dictMsgData)
-                // Update last message in metadata
-                chatRef.child(("\(fromId)-\(toId)")).child("metadata").child("last_message").setValue(lastMsgData)
-                
-            } else {
-                //                chatRef.child(("\(toId)-\(fromId)")).childByAutoId().setValue(dictMsgData)
-                // Update message
-                chatRef.child(("\(toId)-\(fromId)")).child("messages").childByAutoId().setValue(dictMsgData)
-                // Update last message in metadata
-                chatRef.child(("\(toId)-\(fromId)")).child("metadata").child("last_message").setValue(lastMsgData)
-            }
+//            if snapshot.hasChild(("\(toId)-\(fromId))")) {
+//                print("true rooms exist")
+//                //                chatRef.child(("\(toId)-\(fromId)")).childByAutoId().setValue(dictMsgData)
+//                // Update message
+//                chatRef.child(("\(toId)-\(fromId)")).child("messages").childByAutoId().setValue(dictMsgData)
+//                // Update last message in metadata
+//                chatRef.child(("\(toId)-\(fromId)")).child("metadata").child("last_message").setValue(dictMsgData)
+//
+//            } else if snapshot.hasChild(("\(fromId)-\(toId)")) {
+//                print("false room doesn't exist")
+//                //                chatRef.child(("\(fromId)-\(toId)")).childByAutoId().setValue(dictMsgData)
+//                // Update message
+//                chatRef.child(("\(fromId)-\(toId)")).child("messages").childByAutoId().setValue(dictMsgData)
+//                // Update last message in metadata
+//                chatRef.child(("\(fromId)-\(toId)")).child("metadata").child("last_message").setValue(dictMsgData)
+//
+//            } else {
+//                //                chatRef.child(("\(toId)-\(fromId)")).childByAutoId().setValue(dictMsgData)
+//                // Update message
+//                chatRef.child(("\(toId)-\(fromId)")).child("messages").childByAutoId().setValue(dictMsgData)
+//                // Update last message in metadata
+//                chatRef.child(("\(toId)-\(fromId)")).child("metadata").child("last_message").setValue(dictMsgData)
+//            }
             
+            // Update message
+            chatRef.child(("\(toId)-\(fromId)")).child("messages").childByAutoId().setValue(dictMsgData)
+            // Update last message in metadata
+            chatRef.child(("\(toId)-\(fromId)")).child("metadata").child("last_message").setValue(dictMsgData)
             self.msgText = ""
         })
     }

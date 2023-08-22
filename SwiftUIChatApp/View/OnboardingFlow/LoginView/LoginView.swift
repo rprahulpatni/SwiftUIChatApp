@@ -10,9 +10,6 @@ import Firebase
 
 struct LoginView: View {
     @StateObject private var viewModel: LoginViewModel
-    @AppStorage("userUID") var userUID : String = ""
-    @AppStorage("userProfilePic") var userProfilePic : String = ""
-    @AppStorage("userProfileName") var userProfileName : String = ""
 
     init(viewModel: LoginViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
@@ -38,9 +35,16 @@ struct LoginView: View {
                         .alert(isPresented: $viewModel.showAlert) {
                             if  viewModel.isLoggedIn {
                                 return Alert(title: Text("Alert"), message: Text("Logged In Successfull !!"), dismissButton: .default(Text("OK")) {
-                                    self.userUID = self.viewModel.user?.userId ?? ""
-                                    self.userProfileName = self.viewModel.user?.name ?? ""
-                                    self.userProfilePic = self.viewModel.user?.profilePic ?? ""
+                                    let changeRequest = Auth.auth().currentUser!.createProfileChangeRequest()
+                                    changeRequest.photoURL = URL(string: self.viewModel.user?.profilePic ?? "")
+                                    changeRequest.displayName = self.viewModel.user?.name ?? ""
+                                    changeRequest.commitChanges { error in
+                                        if let error = error {
+                                            print("Error updating profile : \(error.localizedDescription)")
+                                        } else {
+                                            print("Profile updated successfully!")
+                                        }
+                                    }
                                     self.viewModel.sessionManager?.loggedUser = self.viewModel.loggedInUser
                                 })
                             } else  {

@@ -17,8 +17,8 @@ struct ChatListView: View {
                 ForEach(viewModel.msgData, id: \.id) { msgData in
                     //For hiding next arrow
                     ZStack {
-                        ChatListRow(msgData: msgData)
-                        let userData = AuthUserData(id: UUID(), profilePic: msgData.userProfilePic, name: msgData.userName, email: "", dob: "", gender: "", countryCode: "", mobile: "", userId: msgData.userId)
+                        ChatListRow(msgData: msgData, uid: getUID())
+                        let userData = AuthUserData(id: UUID(), profilePic: msgData.senderId == getUID() ? msgData.receiverPhoto : msgData.senderPhoto, name: msgData.senderId == getUID() ? msgData.receiverName : msgData.senderName, email: "", dob: "", gender: "", countryCode: "", mobile: "", userId: msgData.senderId == getUID() ? msgData.receiverId : msgData.senderId)
                         let viewModel = SingleChatViewModel(iChatUser: userData)
                         NavigationLink(destination: SingleChatView(viewModel: viewModel)) {
                             EmptyView()

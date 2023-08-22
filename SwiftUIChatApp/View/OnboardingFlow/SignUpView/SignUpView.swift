@@ -124,6 +124,16 @@ struct SignUpView: View {
                         .alert(isPresented: $viewModel.showAlert) {
                             if  viewModel.isLoggedIn {
                                 return Alert(title: Text("Alert"), message: Text("Registration Successfull !!"), dismissButton: .default(Text("OK")) {
+                                    let changeRequest = Auth.auth().currentUser!.createProfileChangeRequest()
+                                    changeRequest.photoURL = URL(string: self.viewModel.user?.profilePic ?? "")
+                                    changeRequest.displayName = self.viewModel.user?.name ?? ""
+                                    changeRequest.commitChanges { error in
+                                        if let error = error {
+                                            print("Error updating profile : \(error.localizedDescription)")
+                                        } else {
+                                            print("Profile updated successfully!")
+                                        }
+                                    }
                                     self.viewModel.sessionManager?.loggedUser = self.viewModel.loggedInUser
                                 })
                             } else  {

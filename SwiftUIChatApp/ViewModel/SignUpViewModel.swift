@@ -33,6 +33,7 @@ class SignUpViewModel: ObservableObject {
     @Published var showAlert = false
     @Published var isLoggedIn = false
     @Published var isLoading: Bool = false
+    @Published var user: AuthUserData?
 
     let sessionManager: SessionManager?
     var loggedInUser : User?
@@ -86,7 +87,8 @@ class SignUpViewModel: ObservableObject {
                     "mobile": self.userMobile,
                     "userId": self.userId
                 ]
-                
+                self.user = AuthUserData(profilePic: self.userProfilePic, name:  self.userName, email:  self.userEmail , dob:  self.userDOB , gender:  self.userGender , countryCode:  self.userCountryCode , mobile:  self.userMobile , userId: self.userId )
+
                 // Call the function to update user information
                 self.sessionManager?.addUserInformation(userData: updatedData) { success, error in
                     let err = failure

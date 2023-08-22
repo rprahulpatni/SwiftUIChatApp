@@ -82,14 +82,6 @@ extension SessionManager {
                 completion(true, "")
             }
         }
-        //        let userRef = Firestore.firestore().collection("users").document(uid)
-        //        userRef.setData(userData) { error in
-        //            if let err = error {
-        //                completion(false, err.localizedDescription)
-        //            } else {
-        //                completion(true, "")
-        //            }
-        //        }
     }
     
     func updateUserInformation(userData: [String: Any], completion: @escaping (Bool, String) -> Void) {
@@ -102,15 +94,6 @@ extension SessionManager {
                 completion(true, "")
             }
         }
-//        let userRef = Firestore.firestore().collection("users").document(uid)
-//        //Update the user document in Firestore with the additional information
-//        userRef.updateData(userData) { error in
-//            if let err = error {
-//                completion(false, err.localizedDescription)
-//            } else {
-//                completion(true, "")
-//            }
-//        }
     }
     
     func uploadImageToFirebaseStorage(image: UIImage?, completion: @escaping (_ success: String, _ failure: String) -> Void) {
