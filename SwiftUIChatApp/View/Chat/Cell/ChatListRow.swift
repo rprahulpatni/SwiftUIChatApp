@@ -16,10 +16,12 @@ struct ChatListRow: View {
             HStack{
                 let imgUrl = URL(string: msgData.userProfilePic ?? "")
                 CustomSDWebImageView(imgURL: imgUrl, imgWidth: 50, imgHeight: 50, placeholderImage: StringConstants.placeholderImagePerson, isCircle: true)
-                
                 VStack(alignment: .leading, spacing: 0, content: {
-                    Text("\(msgData.userName ?? "")").font(.headline)
-                    
+                    HStack{
+                        Text("\(msgData.userName ?? "")").font(.headline)
+                        Spacer()
+                        Text(DateFormatter.getUserLastActivityTime(msgData.timestamp ?? "")).font(.caption).foregroundColor(.gray)
+                    }
                     switch msgData.msgType {
                     case .text:
                         Text("\(msgData.lastMessage ?? "")")
@@ -61,6 +63,6 @@ struct ChatListRow: View {
 
 struct ChatListRow_Previews: PreviewProvider {
     static var previews: some View {
-        ChatListRow(msgData: ChatListModel(userName: "R P", userProfilePic: "https://firebasestorage.googleapis.com:443/v0/b/swiftuichatapp-d2de3.appspot.com/o/images%2F9xfYIgiQSSWb6E3hXeVuAmyfbJG2.jpg?alt=media&token=48e39b64-522b-4877-84b9-29ab63a8229a", lastMessage: "wqeqweqw", msgType: .video))
+        ChatListRow(msgData: ChatListModel(userName: "R P", userProfilePic: "https://firebasestorage.googleapis.com:443/v0/b/swiftuichatapp-d2de3.appspot.com/o/images%2F9xfYIgiQSSWb6E3hXeVuAmyfbJG2.jpg?alt=media&token=48e39b64-522b-4877-84b9-29ab63a8229a", lastMessage: "wqeqweqw", timestamp: "1692703188683", msgType: .video))
     }
 }

@@ -94,12 +94,6 @@ extension DateFormatter {
         return formatter
     }
     
-    static var timeStampFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return formatter
-    }
-    
     static func timeStampToDate(timeVal:String, dateFormat: String) -> String {
         let timeResult:Double =  NumberFormatter().number(from: timeVal)?.doubleValue ?? 0
         let time = timeVal.count > 10 ? timeResult/1000 : timeResult
@@ -110,6 +104,66 @@ extension DateFormatter {
         dateFormatter.dateFormat = dateFormat//"dd, MMM yyyy hh:mm a"
         let strDate = dateFormatter.string(from: date)
         return strDate
+    }
+    
+    static func convertTimestampStringToTimeInterval(_ timestampString: String) -> TimeInterval? {
+        if let timestamp = Double(timestampString) {
+            return timestamp / 1000
+        }
+        return nil
+    }
+    
+    static func convertTimestampStringToDate(_ timestampString: String) -> Date? {
+        if let timestamp = Double(timestampString) {
+            let timestampInSeconds = timestamp / 1000 // Convert milliseconds to seconds
+            return Date(timeIntervalSince1970: timestampInSeconds)
+        }
+        return nil
+    }
+    
+    static func getUserLastActivityTime(_ timestampString: String) -> String {
+        let sourceDate = DateFormatter.convertTimestampStringToDate(timestampString) ?? Date()
+        let formatter: NumberFormatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        
+        let currentDate = Date()
+        var secondsAgo = Double(currentDate.timeIntervalSince(sourceDate))
+        if secondsAgo < 0 {
+            secondsAgo = secondsAgo * (-1)
+        }
+        
+        let minute = 60.0
+        let hour = 60.0 * minute
+        let day = 24 * hour
+        let week = 7 * day
+        
+        if secondsAgo < day  {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "hh:mm a"
+            formatter.locale = Locale(identifier: "en_US")
+            let strDate: String = formatter.string(from: sourceDate)
+            return strDate
+        } else if secondsAgo < week {
+            let days = Double(secondsAgo/day)
+            let rounded = Double(round(days))
+            let roundedDays = Int(rounded)
+            if roundedDays == 1{
+                return "Yesterday"
+            }else{
+                let formatter = DateFormatter()
+                formatter.dateFormat = "dd/MM/yyyy"
+                formatter.locale = Locale(identifier: "en_US")
+                let strDate: String = formatter.string(from: sourceDate)
+                return strDate
+            }
+        } else {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/yyyy"
+            formatter.locale = Locale(identifier: "en_US")
+            let strDate: String = formatter.string(from: sourceDate)
+            return strDate
+        }
     }
 }
 

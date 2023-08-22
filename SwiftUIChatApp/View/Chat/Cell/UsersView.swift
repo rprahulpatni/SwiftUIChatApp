@@ -12,23 +12,24 @@ struct UsersView: View {
     var usersData : AuthUserData
     
     var body: some View {
-        HStack(alignment: .center) {
+        VStack(alignment: .leading) {
             HStack{
                 let imgUrl = URL(string: usersData.profilePic ?? "")
-                CustomSDWebImageView(imgURL: imgUrl, imgWidth: 80, imgHeight: 80, placeholderImage: StringConstants.placeholderImagePerson, isCircle: true)
+                CustomSDWebImageView(imgURL: imgUrl, imgWidth: 50, imgHeight: 50, placeholderImage: StringConstants.placeholderImagePerson, isCircle: true)
                     .padding(.trailing, 10)
-                VStack(alignment: .leading, spacing: 05, content: {
-                    Text("\(usersData.name ?? "")").fontWeight(.semibold)
-                    Text("\(usersData.email ?? "")").lineLimit(1)
-                    Text("\(usersData.countryCode ?? "")\(usersData.mobile ?? "")")
-                }).foregroundColor(.black)
-            }.padding(.all, 15)
+                VStack(alignment: .leading, spacing: 0, content: {
+                    Text("\(usersData.name ?? "")").font(.headline).foregroundColor(.black)
+                    Text("\(usersData.countryCode ?? "") \(usersData.mobile ?? "")").font(.caption).foregroundColor(.gray)
+                })
+            }
+            .padding(.horizontal, 15)
+            .padding(.vertical, 10)
         }
         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-        .background(.white)
-        .cornerRadius(10)
-        .shadow(radius: 5)
-        .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+//        .background(.white)
+//        .cornerRadius(10)
+//        .shadow(radius: 5)
+//        .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
     }
 }
 

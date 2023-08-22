@@ -75,6 +75,7 @@
 		9277FACF2A94816800E1E518 /* CustomSDWebImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277FACE2A94816800E1E518 /* CustomSDWebImageView.swift */; };
 		9277FAD12A9481FA00E1E518 /* ChatListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277FAD02A9481FA00E1E518 /* ChatListRow.swift */; };
 		9277FAD32A94C40000E1E518 /* CustomLocationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277FAD22A94C40000E1E518 /* CustomLocationPicker.swift */; };
+		9277FAD52A94ED7200E1E518 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277FAD42A94ED7200E1E518 /* ShareSheetView.swift */; };
 		92C3F47E2A8F8E86006ED557 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C3F47D2A8F8E86006ED557 /* MessageModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +142,7 @@
 		9277FACE2A94816800E1E518 /* CustomSDWebImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSDWebImageView.swift; sourceTree = "<group>"; };
 		9277FAD02A9481FA00E1E518 /* ChatListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListRow.swift; sourceTree = "<group>"; };
 		9277FAD22A94C40000E1E518 /* CustomLocationPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationPicker.swift; sourceTree = "<group>"; };
+		9277FAD42A94ED7200E1E518 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
 		92C3F47D2A8F8E86006ED557 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -345,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				0AF200B32A86473A00FAF96E /* SingleChatView.swift */,
+				9277FAD42A94ED7200E1E518 /* ShareSheetView.swift */,
 			);
 			path = SingleChatView;
 			sourceTree = "<group>";
@@ -573,6 +576,7 @@
 				9277FACB2A94703500E1E518 /* ChatListViewModel.swift in Sources */,
 				0AF200CE2A864CFD00FAF96E /* LoginValidator.swift in Sources */,
 				0AF200EA2A864FE000FAF96E /* CustomTxtField.swift in Sources */,
+				9277FAD52A94ED7200E1E518 /* ShareSheetView.swift in Sources */,
 				0AF200EB2A864FE000FAF96E /* CustomBtn.swift in Sources */,
 				0AF200FE2A86504F00FAF96E /* UsersModel.swift in Sources */,
 				0A85CEAA2A866BC400E46909 /* CustomLoaderModifier.swift in Sources */,

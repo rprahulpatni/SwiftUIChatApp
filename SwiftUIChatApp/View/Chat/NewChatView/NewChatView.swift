@@ -22,11 +22,14 @@ struct NewChatView: View {
                             EmptyView()
                         }
                         .opacity(0)
-                    }.padding(.all, -5)
+                    }
+                    //.padding(.all, -5)
                 }
                 .listRowSeparator(.hidden,edges: .all)
                 .listRowBackground(Color.clear)
-            }.padding(.all, -5)
+                .listRowInsets(EdgeInsets())
+            }
+            //.padding(.all, -5)
                 .listStyle(.plain)
                 .toolbar(.hidden, for: .tabBar)
                 .navigationBarTitle("USER'S LIST",displayMode: .inline)
