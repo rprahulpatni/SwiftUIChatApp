@@ -10,26 +10,31 @@ import SwiftUI
 struct NewChatView: View {
     @ObservedObject var viewModel : NewChatListViewModel = NewChatListViewModel()
     @Environment(\.dismiss) private var dismiss
-    
+    @EnvironmentObject var sessionManager : SessionManager
+
     var body: some View {
-        VStack {
-            List{
-                ForEach(viewModel.arrUsers, id: \.id) { userData in
-                    //For hiding next arrow
-                    ZStack {
-                        UsersView(usersData: userData)
-                        NavigationLink(destination: OtherUserProfileView(userData: userData)) {
-                            EmptyView()
+        NavigationStack{
+            VStack {
+                List{
+                    ForEach(viewModel.arrUsers, id: \.id) { userData in
+                        //For hiding next arrow
+                        ZStack {
+                            UsersView(usersData: userData)
+//                            let viewModel = SingleChatViewModel(iSessionManager: sessionManager, iChatUser: userData)
+//                            NavigationLink(destination: SingleChatView(viewModel: viewModel)) {
+//                                EmptyView()
+//                            }
+//                            .opacity(0)
+                                                    NavigationLink(destination: OtherUserProfileView(userData: userData)) {
+                                                        EmptyView()
+                                                    }
+                                                    .opacity(0)
                         }
-                        .opacity(0)
                     }
-                    //.padding(.all, -5)
+                    .listRowSeparator(.hidden,edges: .all)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
                 }
-                .listRowSeparator(.hidden,edges: .all)
-                .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets())
-            }
-            //.padding(.all, -5)
                 .listStyle(.plain)
                 .toolbar(.hidden, for: .tabBar)
                 .navigationBarTitle("USER'S LIST",displayMode: .inline)
@@ -41,6 +46,7 @@ struct NewChatView: View {
                 .overlay{
                     LoadingView(showProgress: $viewModel.isLoading)
                 }
+            }
         }
     }
 }

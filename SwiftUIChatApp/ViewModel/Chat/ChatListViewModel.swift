@@ -16,8 +16,7 @@ class ChatListViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var msgData: [MessageModel] = [MessageModel]()
 
-    var fromID:String!
-    var toID:String!
+    var toId:String!
     
     func fetchDB() {
         self.isLoading = true
@@ -35,9 +34,9 @@ class ChatListViewModel: ObservableObject {
                     let arrProjectID = (item.key as! String).components(separatedBy:"-")
                     if arrProjectID[0] == userId || arrProjectID[1] == userId {
                         if arrProjectID[0] != userId {
-                            self.toID = arrProjectID[0]
+                            self.toId = arrProjectID[0]
                         } else {
-                            self.toID = arrProjectID[1]
+                            self.toId = arrProjectID[1]
                         }
 //                        self.fetchUserFromMsg(uid: self.toID)
                     }
@@ -61,15 +60,18 @@ class ChatListViewModel: ObservableObject {
             if snapshot.exists() {
                 if let dict = snapshot.value as? [String:AnyObject]{
                     for item in dict {
-                        let arrId = (item.key).components(separatedBy:"-")
+                        let arrId = (item.key).components(separatedBy:"_")
                         if arrId[0] == fromId || arrId[1] == fromId {
                             if arrId[0] != fromId {
-                                self.toID = arrId[0]
+                                self.toId = arrId[0]
                             } else {
-                                self.toID = arrId[1]
+                                self.toId = arrId[1]
                             }
                         }
-                        if (arrId[0] == "\(self.toID ?? "")" && arrId[1] == "\(fromId)") || (arrId[0] == "\(fromId)" && arrId[1] == "\(self.toID ?? "")") {
+                        let chatRoomId = fromId < toId ? "\(fromId)_\(toId ?? "")" : "\(toId ?? "")_\(fromId)"
+
+                        if (arrId[0] == "\(self.toId ?? "")" && arrId[1] == "\(fromId)") || (arrId[0] == "\(fromId)" && arrId[1] == "\(self.toId ?? "")") {
+//                        if chatRoomId {
                             if let dictData = item.value as? [String: AnyObject] {
                                 if let value = dictData["metadata"]  as? [String: AnyObject] {
                                     for items in value {

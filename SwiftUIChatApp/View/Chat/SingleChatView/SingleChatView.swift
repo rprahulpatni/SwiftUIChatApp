@@ -11,7 +11,10 @@ import Firebase
 struct SingleChatView: View {
     @FocusState private var showKeyboard: Bool
     @StateObject private var viewModel : SingleChatViewModel
-
+    @State private var isMenuOpen = false
+    @State private var isImagePickerPresented = false
+    @State private var selectedMsgType : MessageType = MessageType.text
+    
     init(viewModel: SingleChatViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -27,6 +30,24 @@ struct SingleChatView: View {
             self.viewModel.fetchMessages()
         }
         .toolbar(.hidden, for: .tabBar)
+        .sheet(isPresented: $isMenuOpen) {
+            ShareSheetView(selectedMsgType: $selectedMsgType, isShareSheetVisible: $isMenuOpen, isImagePickerPresented: $isImagePickerPresented)
+                .presentationDragIndicator(.hidden)
+                .presentationDetents([.height(175)])
+        }
+        .photosPicker(isPresented: $isImagePickerPresented, selection: $viewModel.selectedItem)
+        .onChange(of: viewModel.selectedItem) { newItem in
+            Task {
+                // Retrieve selected asset in the form of Data
+                if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                    self.viewModel.selectedImageData = data
+                    if let imgData = self.viewModel.selectedImageData, let uiImage = UIImage(data: imgData)?.compressedImage(imageSize: CGSize(width: 200, height: 200)) {
+                        self.viewModel.selectedImage = uiImage
+                        self.viewModel.handleImageUpload()
+                    }
+                }
+            }
+        }
     }
     
     private var ChatScrollView: some View {
@@ -50,7 +71,7 @@ struct SingleChatView: View {
     private var KeyBoardView: some View {
         HStack(spacing: 10){
             Button(action: {
-                
+                self.isMenuOpen.toggle()
             }, label: {
                 Image(systemName: "paperclip")
                     .padding(10)
@@ -66,7 +87,7 @@ struct SingleChatView: View {
             }
             .background(Color(.init(white: 0.95, alpha: 1)))
             .cornerRadius(10)
-
+            
             Button(action: {
                 viewModel.handleSend()
             }, label: {

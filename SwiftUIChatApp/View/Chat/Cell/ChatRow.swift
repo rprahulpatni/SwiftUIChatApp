@@ -17,8 +17,21 @@ struct ChatRow: View {
                 HStack{
                     Spacer()
                     VStack(alignment: .trailing){
-                        Text(item.text ?? "")
-                            .modifier(chatModifier(myMessage: true))
+                        switch item.msgType {
+                        case .text:
+                            Text(item.text ?? "")
+                                .modifier(chatModifier(myMessage: true))
+                        case .picture:
+                            let imgUrl = URL(string: item.uploadedURL ?? "")
+                            CustomSDWebImageView(imgURL: imgUrl, imgWidth: 200, imgHeight: 200, placeholderImage: StringConstants.placeholderImagePerson, isCircle: false)
+                        case .video:
+                            let imgUrl = URL(string: item.uploadedURL ?? "")
+                            CustomSDWebImageView(imgURL: imgUrl, imgWidth: 200, imgHeight: 200, placeholderImage: StringConstants.placeholderImagePerson, isCircle: false)
+                        case .location:
+                            Text("Location")
+                        case .none:
+                            Text("Location")
+                        }
                         Text(DateFormatter.timeStampToDate(timeVal: item.timestamp ?? "", dateFormat: "hh:mm a"))
                             .foregroundColor(.gray)
                             .font(.caption)
@@ -29,8 +42,21 @@ struct ChatRow: View {
             } else {
                 HStack{
                     VStack(alignment: .leading){
-                        Text(item.text ?? "")
-                            .modifier(chatModifier(myMessage: false))
+                        switch item.msgType {
+                        case .text:
+                            Text(item.text ?? "")
+                                .modifier(chatModifier(myMessage: false))
+                        case .picture:
+                            let imgUrl = URL(string: item.uploadedURL ?? "")
+                            CustomSDWebImageView(imgURL: imgUrl, imgWidth: 200, imgHeight: 200, placeholderImage: StringConstants.placeholderImagePerson, isCircle: false)
+                        case .video:
+                            let imgUrl = URL(string: item.uploadedURL ?? "")
+                            CustomSDWebImageView(imgURL: imgUrl, imgWidth: 200, imgHeight: 200, placeholderImage: StringConstants.placeholderImagePerson, isCircle: false)
+                        case .location:
+                            Text("Location")
+                        case .none:
+                            Text("Location")
+                        }
                         Text(DateFormatter.timeStampToDate(timeVal: item.timestamp ?? "", dateFormat: "hh:mm a"))
                             .foregroundColor(.gray)
                             .font(.caption)

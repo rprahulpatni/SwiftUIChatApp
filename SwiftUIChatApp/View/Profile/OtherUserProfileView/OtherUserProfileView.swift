@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OtherUserProfileView: View {
     var userData: AuthUserData?
-//    @EnvironmentObject var sessionManager : SessionManager
+    @EnvironmentObject var sessionManager : SessionManager
     
     var body: some View {
         VStack {
@@ -21,7 +21,7 @@ struct OtherUserProfileView: View {
             .toolbar {
                 //Navigate to SearchView on click of Search NavigationLink
                 NavigationLink{
-                    let viewModel = SingleChatViewModel(iChatUser: userData)
+                    let viewModel = SingleChatViewModel(iSessionManager: sessionManager, iChatUser: userData)
                     SingleChatView(viewModel: viewModel)
                 } label: {
                     Image(systemName: "ellipsis.message.fill")

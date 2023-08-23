@@ -10,7 +10,8 @@ import SwiftUI
 struct ChatListView: View {
     @State var showNewChat: Bool = false
     @StateObject private var viewModel = ChatListViewModel()
-    
+    @EnvironmentObject var sessionManager : SessionManager
+
     var body: some View {
         NavigationStack{
             List{
@@ -19,7 +20,7 @@ struct ChatListView: View {
                     ZStack {
                         ChatListRow(msgData: msgData, uid: getUID())
                         let userData = AuthUserData(id: UUID(), profilePic: msgData.senderId == getUID() ? msgData.receiverPhoto : msgData.senderPhoto, name: msgData.senderId == getUID() ? msgData.receiverName : msgData.senderName, email: "", dob: "", gender: "", countryCode: "", mobile: "", userId: msgData.senderId == getUID() ? msgData.receiverId : msgData.senderId)
-                        let viewModel = SingleChatViewModel(iChatUser: userData)
+                        let viewModel = SingleChatViewModel(iSessionManager: sessionManager, iChatUser: userData)
                         NavigationLink(destination: SingleChatView(viewModel: viewModel)) {
                             EmptyView()
                         }

@@ -118,4 +118,27 @@ extension SessionManager {
         }
         uploadTask.resume()
     }
+    
+    func uploadChatImageToFirebaseStorage(image: UIImage?, completion: @escaping (_ success: String, _ failure: String) -> Void) {
+        guard let imageData = image?.jpegData(compressionQuality: 0.5) else {
+            completion("", "Failed to convert image to data")
+            return
+        }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let storageRef = Storage.storage().reference().child("chatImages/\(uid).jpg")
+        let uploadTask = storageRef.putData(imageData, metadata: nil) { metadata, error in
+            if let err = error {
+                completion("", err.localizedDescription)
+                return
+            }
+            storageRef.downloadURL { (url, error) -> Void in
+                if let err = error {
+                    completion("", err.localizedDescription)
+                } else if let downloadURL = url {
+                    completion(downloadURL.absoluteString, "")
+                }
+            }
+        }
+        uploadTask.resume()
+    }
 }
