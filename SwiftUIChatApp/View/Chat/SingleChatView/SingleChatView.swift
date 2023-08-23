@@ -13,6 +13,7 @@ struct SingleChatView: View {
     @StateObject private var viewModel : SingleChatViewModel
     @State private var isMenuOpen = false
     @State private var isImagePickerPresented = false
+    @State private var isVideoPickerPresented = false
     @State private var selectedMsgType : MessageType = MessageType.text
     
     init(viewModel: SingleChatViewModel) {
@@ -31,22 +32,40 @@ struct SingleChatView: View {
         }
         .toolbar(.hidden, for: .tabBar)
         .sheet(isPresented: $isMenuOpen) {
-            ShareSheetView(selectedMsgType: $selectedMsgType, isShareSheetVisible: $isMenuOpen, isImagePickerPresented: $isImagePickerPresented)
+            ShareSheetView(selectedMsgType: $selectedMsgType, isShareSheetVisible: $isMenuOpen, isImagePickerPresented: $isImagePickerPresented, isVideoPickerPresented: $isVideoPickerPresented)
                 .presentationDragIndicator(.hidden)
                 .presentationDetents([.height(175)])
         }
-        .photosPicker(isPresented: $isImagePickerPresented, selection: $viewModel.selectedItem)
+        .photosPicker(isPresented: self.selectedMsgType == .picture ? $isImagePickerPresented : $isVideoPickerPresented, selection: $viewModel.selectedItem, matching: self.selectedMsgType == .picture ? .images : .videos)
         .onChange(of: viewModel.selectedItem) { newItem in
             Task {
                 // Retrieve selected asset in the form of Data
                 if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                    self.viewModel.selectedImageData = data
-                    if let imgData = self.viewModel.selectedImageData, let uiImage = UIImage(data: imgData)?.compressedImage(imageSize: CGSize(width: 200, height: 200)) {
-                        self.viewModel.selectedImage = uiImage
-                        self.viewModel.handleImageUpload()
-                    }
+                    if selectedMsgType == .picture {
+                        self.viewModel.selectedImageData = data
+                        if let imgData = self.viewModel.selectedImageData, let uiImage = UIImage(data: imgData)?.compressedImage(imageSize: CGSize(width: 250, height: 250)) {
+                            self.viewModel.selectedImage = uiImage
+                            self.viewModel.handleImageUpload()
+                        }
+                    } else {
+                        self.viewModel.selectedVideoData = data
+                        self.viewModel.handleVideoUpload()
+                    }                    
                 }
             }
+        }
+//        .fileImporter(isPresented: $isVideoPickerPresented, allowedContentTypes: [.movie]) { result in
+//            do {
+//                let selectedURL = try result.get()
+//                self.viewModel.selectedVideoURL = selectedURL
+//                self.viewModel.handleVideoUpload()
+//            } catch {
+//                // Handle error, if any
+//                print("Error selecting video: \(error)")
+//            }
+//        }
+        .overlay{
+            LoadingView(showProgress: $viewModel.isLoading)
         }
     }
     

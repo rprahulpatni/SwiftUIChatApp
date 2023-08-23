@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 struct StringConstants {
     static let placeholderImageLogo = "logo"
@@ -220,5 +221,24 @@ extension Date {
         dateFormatter.dateFormat = dateFormat//"dd, MMM yyyy hh:mm a"
         let strDate = dateFormatter.string(from: date)
         return strDate
+    }
+}
+
+//Generte Thumbnail from Video URL
+extension URL {
+    func generateThumbnail() -> UIImage? {
+        do {
+            let asset = AVURLAsset(url: self)
+            let imageGenerator = AVAssetImageGenerator(asset: asset)
+            imageGenerator.appliesPreferredTrackTransform = true
+            // Select the right one based on which version you are using
+            // Swift 4.2
+            let cgImage = try imageGenerator.copyCGImage(at: .zero, actualTime: nil)
+            
+            return UIImage(cgImage: cgImage)
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
     }
 }

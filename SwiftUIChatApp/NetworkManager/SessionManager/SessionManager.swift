@@ -10,6 +10,7 @@ import SwiftUI
 import Firebase
 import FirebaseAuth
 import FirebaseStorage
+import AVFoundation
 
 class SessionManager: NSObject, ObservableObject {
     
@@ -125,7 +126,7 @@ extension SessionManager {
             return
         }
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let storageRef = Storage.storage().reference().child("chatImages/\(uid).jpg")
+        let storageRef = Storage.storage().reference().child("chatImages/\(uid)\(Date().currentTimeMillis()).jpg")
         let uploadTask = storageRef.putData(imageData, metadata: nil) { metadata, error in
             if let err = error {
                 completion("", err.localizedDescription)
@@ -140,5 +141,36 @@ extension SessionManager {
             }
         }
         uploadTask.resume()
+    }
+    
+    func uploadChatVideoToFirebaseStorage(uploadedData: Data?, completion: @escaping (_ success: String, _ failure: String) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let storageRef = Storage.storage().reference().child("chatVideo/\(uid)\(Date().currentTimeMillis()).mov")
+        let uploadTask = storageRef.putData(uploadedData!, metadata: nil) { metadata, error in
+            if let err = error {
+                completion("", err.localizedDescription)
+                return
+            }
+            storageRef.downloadURL { (url, error) -> Void in
+                if let err = error {
+                    completion("", err.localizedDescription)
+                } else if let downloadURL = url {
+                    completion(downloadURL.absoluteString, "")
+                }
+            }
+        }
+        uploadTask.resume()
+    }
+    
+    func convertVideo(toMPEG4FormatForVideo inputURL: URL, outputURL: URL, handler: @escaping (AVAssetExportSession) -> Void) {
+        try! FileManager.default.removeItem(at: outputURL as URL)
+        let asset = AVURLAsset(url: inputURL as URL, options: nil)
+
+        let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality)!
+        exportSession.outputURL = outputURL
+        exportSession.outputFileType = .mp4
+        exportSession.exportAsynchronously(completionHandler: {
+            handler(exportSession)
+        })
     }
 }

@@ -22,6 +22,9 @@ class SingleChatViewModel: ObservableObject {
     @Published var selectedImageData : Data?
     @Published var selectedImage : UIImage? = nil
     @Published var selectedItem: PhotosPickerItem? = nil
+    @Published var selectedVideoURL : URL?
+    @Published var selectedVideoData : Data?
+
     let sessionManager: SessionManager?
 
     var chatUser: AuthUserData?
@@ -64,12 +67,22 @@ class SingleChatViewModel: ObservableObject {
         self.isLoading = true
         self.sessionManager?.uploadChatImageToFirebaseStorage(image: self.selectedImage) { imageUrl, failure in
             if failure.isNotEmpty {
-//                self.errorMessage = failure
-//                self.showAlert = true
                 self.isLoading = false
             } else {
                 self.isLoading = false
                 self.sendMessgagesToFirebase("", imageUrl, .picture)
+            }
+        }
+    }
+    
+    func handleVideoUpload() {
+        self.isLoading = true
+        self.sessionManager?.uploadChatVideoToFirebaseStorage(uploadedData: self.selectedVideoData) { videoUrl, failure in
+            if failure.isNotEmpty {
+                self.isLoading = false
+            } else {
+                self.isLoading = false
+                self.sendMessgagesToFirebase("", videoUrl, .video)
             }
         }
     }

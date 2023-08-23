@@ -11,7 +11,8 @@ struct ShareSheetView: View {
     @Binding var selectedMsgType: MessageType
     @Binding var isShareSheetVisible: Bool
     @Binding var isImagePickerPresented: Bool
-
+    @Binding var isVideoPickerPresented: Bool
+    
     var body: some View {
         VStack{
             HStack{
@@ -35,6 +36,9 @@ struct ShareSheetView: View {
                 Button(action: {
                     self.selectedMsgType = .video
                     self.isShareSheetVisible = false
+                    DispatchQueue.main.asyncAfter(deadline: .now()+0.2, execute: {
+                        self.isVideoPickerPresented = true
+                    })
                 }, label: {
                     VStack{
                         Image(systemName: StringConstants.placeholderImageVideo)
@@ -76,6 +80,6 @@ struct ShareSheetView: View {
 
 struct ShareSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        ShareSheetView(selectedMsgType: .constant(.picture), isShareSheetVisible: .constant(false), isImagePickerPresented: .constant(false))
+        ShareSheetView(selectedMsgType: .constant(.picture), isShareSheetVisible: .constant(false), isImagePickerPresented: .constant(false), isVideoPickerPresented: .constant(false))
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ChatRow: View {
     var item: MessageModel
@@ -23,10 +24,26 @@ struct ChatRow: View {
                                 .modifier(chatModifier(myMessage: true))
                         case .picture:
                             let imgUrl = URL(string: item.uploadedURL ?? "")
-                            CustomSDWebImageView(imgURL: imgUrl, imgWidth: 200, imgHeight: 200, placeholderImage: StringConstants.placeholderImagePerson, isCircle: false)
+                            CustomSDWebImageView(imgURL: imgUrl, imgWidth: 250, imgHeight: 250, placeholderImage: StringConstants.placeholderImagePerson, isCircle: false, cornerRadius: 10)
+                                .modifier(chatModifier(myMessage: true))
                         case .video:
-                            let imgUrl = URL(string: item.uploadedURL ?? "")
-                            CustomSDWebImageView(imgURL: imgUrl, imgWidth: 200, imgHeight: 200, placeholderImage: StringConstants.placeholderImagePerson, isCircle: false)
+                            let imgUrl = URL(string: item.uploadedURL ?? "")?.generateThumbnail()
+                            WebImage(url: nil).placeholder{
+                                ZStack(alignment: .center) {
+                                    Image(uiImage: imgUrl ?? UIImage())
+                                        .resizable()
+                                        .frame(width: 250, height: 250)
+                                        .cornerRadius(10)
+                                        .modifier(chatModifier(myMessage: true))
+                                        .onTapGesture {
+                                            
+                                        }
+                                    Image(systemName: "play.circle.fill")
+                                                    .resizable()
+                                                    .foregroundColor(.white)
+                                                    .frame(width: 50, height: 50)
+                                }
+                            }
                         case .location:
                             Text("Location")
                         case .none:
@@ -48,10 +65,26 @@ struct ChatRow: View {
                                 .modifier(chatModifier(myMessage: false))
                         case .picture:
                             let imgUrl = URL(string: item.uploadedURL ?? "")
-                            CustomSDWebImageView(imgURL: imgUrl, imgWidth: 200, imgHeight: 200, placeholderImage: StringConstants.placeholderImagePerson, isCircle: false)
+                            CustomSDWebImageView(imgURL: imgUrl, imgWidth: 250, imgHeight: 250, placeholderImage: StringConstants.placeholderImagePerson, isCircle: false, cornerRadius: 10)
+                                .modifier(chatModifier(myMessage: false))
                         case .video:
-                            let imgUrl = URL(string: item.uploadedURL ?? "")
-                            CustomSDWebImageView(imgURL: imgUrl, imgWidth: 200, imgHeight: 200, placeholderImage: StringConstants.placeholderImagePerson, isCircle: false)
+                            let imgUrl = URL(string: item.uploadedURL ?? "")?.generateThumbnail()
+                            WebImage(url: nil).placeholder{
+                                ZStack(alignment: .center) {
+                                    Image(uiImage: imgUrl ?? UIImage())
+                                        .resizable()
+                                        .frame(width: 250, height: 250)
+                                        .cornerRadius(10)
+                                        .modifier(chatModifier(myMessage: false))
+                                        .onTapGesture {
+                                            
+                                        }
+                                    Image(systemName: "play.circle.fill")
+                                                    .resizable()
+                                                    .foregroundColor(.white)
+                                                    .frame(width: 50, height: 50)
+                                }
+                            }
                         case .location:
                             Text("Location")
                         case .none:
@@ -72,7 +105,7 @@ struct ChatRow: View {
 
 struct ChatRow_Previews: PreviewProvider {
     static var previews: some View {
-        ChatRow(item: MessageModel(receiverId: "456", senderId: "123", text: "Hello, test msg",  timestamp: "1692623914719"), uid: "")
+        ChatRow(item: MessageModel(receiverId: "456", senderId: "123", text: "",  timestamp: "1692623914719", msgType: .picture, uploadedURL: "https://firebasestorage.googleapis.com:443/v0/b/swiftuichatapp-d2de3.appspot.com/o/chatImages%2FggmqrjQZWjhKagFgZpXCOT4MC7r1.jpg?alt=media&token=b2aca8f0-1f52-48e6-96a2-26f297e50eb4"), uid: "")
     }
 }
 
@@ -80,9 +113,9 @@ struct chatModifier : ViewModifier{
     var myMessage : Bool
     func body(content: Content) -> some View {
         content
-            .padding()
+            .padding(.all, 10)
             .background(myMessage ? Color.teal : Color.gray)
-            .cornerRadius(20)
+            .cornerRadius(10)
             .foregroundColor(Color.white)
     }
 }
