@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Firebase
+import MapItemPicker
 
 struct SingleChatView: View {
     @FocusState private var showKeyboard: Bool
@@ -14,6 +15,7 @@ struct SingleChatView: View {
     @State private var isMenuOpen = false
     @State private var isImagePickerPresented = false
     @State private var isVideoPickerPresented = false
+    @State private var isLocationPickerPresented = false
     @State private var selectedMsgType : MessageType = MessageType.text
     
     init(viewModel: SingleChatViewModel) {
@@ -32,7 +34,7 @@ struct SingleChatView: View {
         }
         .toolbar(.hidden, for: .tabBar)
         .sheet(isPresented: $isMenuOpen) {
-            ShareSheetView(selectedMsgType: $selectedMsgType, isShareSheetVisible: $isMenuOpen, isImagePickerPresented: $isImagePickerPresented, isVideoPickerPresented: $isVideoPickerPresented)
+            ShareSheetView(selectedMsgType: $selectedMsgType, isShareSheetVisible: $isMenuOpen, isImagePickerPresented: $isImagePickerPresented, isVideoPickerPresented: $isVideoPickerPresented, isLocationPickerPresented: $isLocationPickerPresented)
                 .presentationDragIndicator(.hidden)
                 .presentationDetents([.height(175)])
         }
@@ -50,20 +52,16 @@ struct SingleChatView: View {
                     } else {
                         self.viewModel.selectedVideoData = data
                         self.viewModel.handleVideoUpload()
-                    }                    
+                    }
                 }
             }
         }
-//        .fileImporter(isPresented: $isVideoPickerPresented, allowedContentTypes: [.movie]) { result in
-//            do {
-//                let selectedURL = try result.get()
-//                self.viewModel.selectedVideoURL = selectedURL
-//                self.viewModel.handleVideoUpload()
-//            } catch {
-//                // Handle error, if any
-//                print("Error selecting video: \(error)")
-//            }
-//        }
+        .mapItemPicker(isPresented: $isLocationPickerPresented) { item in
+            if let latitude = item?.placemark.coordinate.latitude, let longitute = item?.placemark.coordinate.longitude {
+                //print("Selected \(name)")
+                self.viewModel.handleLocationUpload(latitude, longitute)
+            }
+        }
         .overlay{
             LoadingView(showProgress: $viewModel.isLoading)
         }
@@ -72,11 +70,20 @@ struct SingleChatView: View {
     private var ChatScrollView: some View {
         VStack{
             ScrollView(showsIndicators: false){
-                ForEach(self.viewModel.msgData, id: \.self) { item in
-                    ChatRow(item: item, uid: getUID())
-                }
-                HStack{
-                    Spacer()
+                ScrollViewReader { scrollView in
+                    VStack {
+                        ForEach(self.viewModel.msgData, id: \.self) { item in
+                            ChatRow(item: item, uid: getUID())
+                        }
+                        HStack{
+                            Spacer()
+                        }
+                        .id("Empty")
+                    }
+                    .onReceive(viewModel.$msgDataCount) { _ in
+                        // Scroll to the bottom initially
+                        scrollView.scrollTo("Empty", anchor: .bottom)
+                    }
                 }
             }
             .background(Color(.init(white: 0.95, alpha: 1)))
@@ -85,6 +92,7 @@ struct SingleChatView: View {
                     .background(Color(.systemBackground))
             })
         }
+        .modifier(CustomHideKeyboardModifier())
     }
     
     private var KeyBoardView: some View {
@@ -100,6 +108,8 @@ struct SingleChatView: View {
                 HStack{
                     TextField("Message", text: $viewModel.msgText, axis: .vertical)
                         .focused($showKeyboard)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
                 }
                 .padding(.horizontal, 10)
                 .padding(.vertical, 10)
@@ -122,8 +132,3 @@ struct SingleChatView: View {
     }
 }
 
-//struct SingleChatView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SingleChatView(viewModel: <#SingleChatViewModel#>)
-//    }
-//}

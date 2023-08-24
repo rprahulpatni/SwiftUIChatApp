@@ -12,6 +12,7 @@ struct ShareSheetView: View {
     @Binding var isShareSheetVisible: Bool
     @Binding var isImagePickerPresented: Bool
     @Binding var isVideoPickerPresented: Bool
+    @Binding var isLocationPickerPresented: Bool
     
     var body: some View {
         VStack{
@@ -36,9 +37,7 @@ struct ShareSheetView: View {
                 Button(action: {
                     self.selectedMsgType = .video
                     self.isShareSheetVisible = false
-                    DispatchQueue.main.asyncAfter(deadline: .now()+0.2, execute: {
-                        self.isVideoPickerPresented = true
-                    })
+                    self.isVideoPickerPresented = true
                 }, label: {
                     VStack{
                         Image(systemName: StringConstants.placeholderImageVideo)
@@ -55,6 +54,9 @@ struct ShareSheetView: View {
                 Button(action: {
                     self.selectedMsgType = .location
                     self.isShareSheetVisible = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        self.isLocationPickerPresented = true
+                    }
                 }, label: {
                     VStack{
                         Image(systemName: StringConstants.placeholderImageLocation)
@@ -80,6 +82,6 @@ struct ShareSheetView: View {
 
 struct ShareSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        ShareSheetView(selectedMsgType: .constant(.picture), isShareSheetVisible: .constant(false), isImagePickerPresented: .constant(false), isVideoPickerPresented: .constant(false))
+        ShareSheetView(selectedMsgType: .constant(.picture), isShareSheetVisible: .constant(false), isImagePickerPresented: .constant(false), isVideoPickerPresented: .constant(false), isLocationPickerPresented: .constant(false))
     }
 }

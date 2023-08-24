@@ -1,8 +1,8 @@
 //
 //  OnboardingView.swift
-//  SwiftUIDemo
+//  SwiftUIChatApp
 //
-//  Created by Neosoft on 05/06/23.
+//  Created by NeoSOFT on 24/08/23.
 //
 
 import SwiftUI

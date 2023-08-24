@@ -2,13 +2,12 @@
 //  ContentView.swift
 //  SwiftUIChatApp
 //
-//  Created by Neosoft on 11/08/23.
+//  Created by NeoSOFT on 24/08/23.
 //
 
 import SwiftUI
 
 struct ContentView: View {
-    
     var body: some View {
         TabView{
             ChatListView()

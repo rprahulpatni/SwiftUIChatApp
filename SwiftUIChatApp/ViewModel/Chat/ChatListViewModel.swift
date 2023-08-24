@@ -68,7 +68,7 @@ class ChatListViewModel: ObservableObject {
                                 self.toId = arrId[1]
                             }
                         }
-                        let chatRoomId = fromId < toId ? "\(fromId)_\(toId ?? "")" : "\(toId ?? "")_\(fromId)"
+//                        let chatRoomId = fromId < toId ? "\(fromId)_\(toId ?? "")" : "\(toId ?? "")_\(fromId)"
 
                         if (arrId[0] == "\(self.toId ?? "")" && arrId[1] == "\(fromId)") || (arrId[0] == "\(fromId)" && arrId[1] == "\(self.toId ?? "")") {
 //                        if chatRoomId {
@@ -86,6 +86,9 @@ class ChatListViewModel: ObservableObject {
                                             message.senderPhoto = (dictionary["senderPhoto"] as! String)
                                             message.text = (dictionary["text"] as! String)
                                             message.timestamp = (dictionary["timestamp"] as! String)
+                                            message.uploadedURL = (dictionary["uploadedURL"] as! String)
+                                            message.latitude = (dictionary["latitude"] as! Double)
+                                            message.longitude = (dictionary["longitude"] as! Double)
                                             message.msgType = nil
                                             if let value =  dictionary["msgType"] as? String  {
                                                 message.msgType = MessageType(rawValue:value)!

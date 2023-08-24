@@ -12,10 +12,10 @@
     {
       "identity" : "firebase-ios-sdk",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/firebase/firebase-ios-sdk",
+      "location" : "https://github.com/firebase/firebase-ios-sdk.git",
       "state" : {
-        "branch" : "master",
-        "revision" : "3df15ba9a4a6f71cdd1737b16e546f4544620e4b"
+        "revision" : "2bfe6abe1014aafe5cf28401708f7d39f9926a76",
+        "version" : "10.14.0"
       }
     },
     {
@@ -64,6 +64,15 @@
       }
     },
     {
+      "identity" : "interop-ios-for-google-sdks",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/google/interop-ios-for-google-sdks.git",
+      "state" : {
+        "revision" : "2d12673670417654f08f5f90fdd62926dc3a2648",
+        "version" : "100.0.0"
+      }
+    },
+    {
       "identity" : "leveldb",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/leveldb.git",
@@ -104,8 +113,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImageSwiftUI.git",
       "state" : {
-        "branch" : "master",
-        "revision" : "e837c37d45449fbd3b4745c10c5b5274e73edead"
+        "revision" : "e837c37d45449fbd3b4745c10c5b5274e73edead",
+        "version" : "2.2.3"
       }
     },
     {
@@ -115,6 +124,15 @@
       "state" : {
         "revision" : "ce20dc083ee485524b802669890291c0d8090170",
         "version" : "1.22.1"
+      }
+    },
+    {
+      "identity" : "swiftui-map-item-picker",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lorenzofiamingo/swiftui-map-item-picker",
+      "state" : {
+        "revision" : "48e0bdbcecc901b0cfd6962f0b42225136789c07",
+        "version" : "2.0.0"
       }
     }
   ],

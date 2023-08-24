@@ -21,7 +21,7 @@ struct StringConstants {
     static let placeholderImagePicture = "photo.fill"
     static let placeholderImageVideo = "video.fill"
     static let placeholderImageLocation = "location.fill"
-
+    
     static let msgError = "Error"
     static let msgCancel = "Cancel"
     struct APIErrors {
@@ -74,10 +74,6 @@ extension String {
         let result =  phoneTest.evaluate(with: self)
         return result
     }
-}
-
-func hideKeyboard() {
-    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
 }
 
 extension DateFormatter {
@@ -226,19 +222,56 @@ extension Date {
 
 //Generte Thumbnail from Video URL
 extension URL {
-    func generateThumbnail() -> UIImage? {
-        do {
-            let asset = AVURLAsset(url: self)
-            let imageGenerator = AVAssetImageGenerator(asset: asset)
-            imageGenerator.appliesPreferredTrackTransform = true
-            // Select the right one based on which version you are using
-            // Swift 4.2
-            let cgImage = try imageGenerator.copyCGImage(at: .zero, actualTime: nil)
-            
-            return UIImage(cgImage: cgImage)
-        } catch {
-            print(error.localizedDescription)
-            return nil
+    //    func generateThumbnail() -> UIImage? {
+    //        do {
+    //            let asset = AVURLAsset(url: self)
+    //            let imageGenerator = AVAssetImageGenerator(asset: asset)
+    //            imageGenerator.appliesPreferredTrackTransform = true
+    //            // Select the right one based on which version you are using
+    //            // Swift 4.2
+    //            let cgImage = try imageGenerator.copyCGImage(at: .zero, actualTime: nil)
+    //
+    //            return UIImage(cgImage: cgImage)
+    //        } catch {
+    //            print(error.localizedDescription)
+    //            return nil
+    //        }
+    //    }
+    
+    //    static func generateThumbnail(_ videoUrl: URL, completion: @escaping (UIImage?) -> Void) {
+    //        let asset = AVAsset(url: videoUrl)
+    //        let generator = AVAssetImageGenerator(asset: asset)
+    //        let time = CMTime(seconds: 2, preferredTimescale: 1) // Example: 2 seconds into the video
+    //
+    //        generator.generateCGImagesAsynchronously(forTimes: [NSValue(time: time)]) { requestedTime, cgImage, _, _, _ in
+    //            if let cgImage = cgImage {
+    //                let uiImage = UIImage(cgImage: cgImage)
+    //                completion(uiImage)
+    //            } else {
+    //                completion(nil)
+    //            }
+    //        }
+    //    }
+}
+
+///////
+///
+func generateThumbnail(from videoURL: URL, completion: @escaping (UIImage?) -> Void) {
+    let asset = AVAsset(url: videoURL)
+    let generator = AVAssetImageGenerator(asset: asset)
+    let time = CMTime(seconds: 2, preferredTimescale: 1) // Example: 2 seconds into the video
+    // Specify the correct video orientation
+    generator.appliesPreferredTrackTransform = true
+    generator.generateCGImagesAsynchronously(forTimes: [NSValue(time: time)]) { requestedTime, cgImage, _, _, _ in
+        if let cgImage = cgImage {
+            let uiImage = UIImage(cgImage: cgImage)
+            completion(uiImage)
+        } else {
+            completion(nil)
         }
     }
+}
+
+func hideKeyboard() {
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
 }

@@ -17,7 +17,8 @@ class SingleChatViewModel: ObservableObject {
     @Published var msgText: String = ""
     @Published var isLoading: Bool = false
     @Published var msgData: [MessageModel] = [MessageModel]()
-    
+    @Published var msgDataCount: Int = 0
+
     //Sending image
     @Published var selectedImageData : Data?
     @Published var selectedImage : UIImage? = nil
@@ -36,31 +37,7 @@ class SingleChatViewModel: ObservableObject {
     }
     
     func handleSend(){
-//        let fromId = getUID()
-//        let senderName = getUName()
-//        let senderPhoto = getUPhoto()
-//
-//        guard let toId = self.chatUser?.userId else {return}
-//        guard let reciverName = self.chatUser?.name else {return}
-//        guard let reciverPhoto = self.chatUser?.profilePic else {return}
-//
-//        let dictObj = MessageModel(isread: true, receiverId: toId, receiverName: reciverName, receiverPhoto: reciverPhoto, senderId: fromId, senderName: senderName, senderPhoto: senderPhoto, text: self.msgText, timestamp: "\(Date().currentTimeMillis())", msgType: MessageType.text, uploadedURL: "")
-//        let dictMsgData = dictObj.convertedDictionary
-//
-//        let chatRoomId = fromId < toId ? "\(fromId)_\(toId)" : "\(toId)_\(fromId)"
-//
-//        let chatRef = Database.database().reference(withPath: "chats")
-//        chatRef.child("chats").observeSingleEvent(of: .value, with: { (snapshot) in
-//
-//            // Update message
-//            chatRef.child((chatRoomId)).child("messages").childByAutoId().setValue(dictMsgData)
-//            // Update last message in metadata
-//            chatRef.child((chatRoomId)).child("metadata").child("last_message").setValue(dictMsgData)
-//
-//            self.msgText = ""
-//        })
-        
-        self.sendMessgagesToFirebase(self.msgText, "", .text)
+        self.sendMessgagesToFirebase(self.msgText, "", 0.0, 0.0, .text)
     }
     
     func handleImageUpload() {
@@ -70,7 +47,7 @@ class SingleChatViewModel: ObservableObject {
                 self.isLoading = false
             } else {
                 self.isLoading = false
-                self.sendMessgagesToFirebase("", imageUrl, .picture)
+                self.sendMessgagesToFirebase("", imageUrl, 0.0, 0.0, .picture)
             }
         }
     }
@@ -82,12 +59,16 @@ class SingleChatViewModel: ObservableObject {
                 self.isLoading = false
             } else {
                 self.isLoading = false
-                self.sendMessgagesToFirebase("", videoUrl, .video)
+                self.sendMessgagesToFirebase("", videoUrl, 0.0, 0.0, .video)
             }
         }
     }
     
-    func sendMessgagesToFirebase(_ text: String, _ uploadedURL: String, _ msgType: MessageType) {
+    func handleLocationUpload(_ latitude: Double, _ longitute: Double) {
+        self.sendMessgagesToFirebase("", "", latitude, longitute, .location)
+    }
+    
+    func sendMessgagesToFirebase(_ text: String, _ uploadedURL: String, _ latitude: Double, _ longitude: Double, _ msgType: MessageType) {
         let fromId = getUID()
         let senderName = getUName()
         let senderPhoto = getUPhoto()
@@ -96,7 +77,7 @@ class SingleChatViewModel: ObservableObject {
         guard let reciverName = self.chatUser?.name else {return}
         guard let reciverPhoto = self.chatUser?.profilePic else {return}
         
-        let dictObj = MessageModel(isread: true, receiverId: toId, receiverName: reciverName, receiverPhoto: reciverPhoto, senderId: fromId, senderName: senderName, senderPhoto: senderPhoto, text: text, timestamp: "\(Date().currentTimeMillis())", msgType: msgType, uploadedURL: uploadedURL)
+        let dictObj = MessageModel(isread: true, receiverId: toId, receiverName: reciverName, receiverPhoto: reciverPhoto, senderId: fromId, senderName: senderName, senderPhoto: senderPhoto, text: text, timestamp: "\(Date().currentTimeMillis())", msgType: msgType, uploadedURL: uploadedURL, latitude: latitude, longitude: longitude)
         let dictMsgData = dictObj.convertedDictionary
         
         let chatRoomId = fromId < toId ? "\(fromId)_\(toId)" : "\(toId)_\(fromId)"
@@ -144,6 +125,8 @@ class SingleChatViewModel: ObservableObject {
                                             message.text = (dictionary["text"] as! String)
                                             message.timestamp = (dictionary["timestamp"] as! String)
                                             message.uploadedURL = (dictionary["uploadedURL"] as! String)
+                                            message.latitude = (dictionary["latitude"] as! Double)
+                                            message.longitude = (dictionary["longitude"] as! Double)
                                             message.msgType = nil
                                             if let value =  dictionary["msgType"] as? String  {
                                                 message.msgType = MessageType(rawValue:value)!
@@ -166,6 +149,7 @@ class SingleChatViewModel: ObservableObject {
                         }
                         return bool
                     }
+                    self.msgDataCount = self.msgData.count
                 }
             }
             self.isLoading = false
