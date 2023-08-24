@@ -61,7 +61,7 @@
 		924E5AB52A975EB8007E3D02 /* NavigationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E5AB12A975EB8007E3D02 /* NavigationUtils.swift */; };
 		924E5AB82A97614C007E3D02 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 924E5AB72A97614C007E3D02 /* GoogleService-Info.plist */; };
 		92A359042A9763D200602586 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359032A9763D200602586 /* SessionManager.swift */; };
-		92A359062A9763D900602586 /* LocalDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359052A9763D900602586 /* LocalDataHelper.swift */; };
+		92A359062A9763D900602586 /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359052A9763D900602586 /* LocalDataManager.swift */; };
 		92A3590A2A9763E300602586 /* SignUpValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359072A9763E300602586 /* SignUpValidator.swift */; };
 		92A3590B2A9763E300602586 /* LoginValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359082A9763E300602586 /* LoginValidator.swift */; };
 		92A3590C2A9763E300602586 /* EditProfileValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359092A9763E300602586 /* EditProfileValidator.swift */; };
@@ -131,7 +131,7 @@
 		924E5AB12A975EB8007E3D02 /* NavigationUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationUtils.swift; sourceTree = "<group>"; };
 		924E5AB72A97614C007E3D02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		92A359032A9763D200602586 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
-		92A359052A9763D900602586 /* LocalDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDataHelper.swift; sourceTree = "<group>"; };
+		92A359052A9763D900602586 /* LocalDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
 		92A359072A9763E300602586 /* SignUpValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpValidator.swift; sourceTree = "<group>"; };
 		92A359082A9763E300602586 /* LoginValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginValidator.swift; sourceTree = "<group>"; };
 		92A359092A9763E300602586 /* EditProfileValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileValidator.swift; sourceTree = "<group>"; };
@@ -283,12 +283,9 @@
 		924E5A712A975D6B007E3D02 /* NetworkManager */ = {
 			isa = PBXGroup;
 			children = (
+				92A3592F2A97899800602586 /* Validator */,
 				92A359032A9763D200602586 /* SessionManager.swift */,
-				92A3590D2A9763EB00602586 /* ValidationResult.swift */,
-				92A359092A9763E300602586 /* EditProfileValidator.swift */,
-				92A359082A9763E300602586 /* LoginValidator.swift */,
-				92A359072A9763E300602586 /* SignUpValidator.swift */,
-				92A359052A9763D900602586 /* LocalDataHelper.swift */,
+				92A359052A9763D900602586 /* LocalDataManager.swift */,
 			);
 			path = NetworkManager;
 			sourceTree = "<group>";
@@ -380,6 +377,17 @@
 				92A359292A97652000602586 /* ChatListViewModel.swift */,
 			);
 			path = Chat;
+			sourceTree = "<group>";
+		};
+		92A3592F2A97899800602586 /* Validator */ = {
+			isa = PBXGroup;
+			children = (
+				92A359072A9763E300602586 /* SignUpValidator.swift */,
+				92A359082A9763E300602586 /* LoginValidator.swift */,
+				92A359092A9763E300602586 /* EditProfileValidator.swift */,
+				92A3590D2A9763EB00602586 /* ValidationResult.swift */,
+			);
+			path = Validator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -506,7 +514,7 @@
 				924E5A872A975EA3007E3D02 /* ViewExtensions.swift in Sources */,
 				924E5AA72A975EB0007E3D02 /* CustomUserForm.swift in Sources */,
 				924E5A9F2A975EB0007E3D02 /* CustomRatingView.swift in Sources */,
-				92A359062A9763D900602586 /* LocalDataHelper.swift in Sources */,
+				92A359062A9763D900602586 /* LocalDataManager.swift in Sources */,
 				924E5A9C2A975EB0007E3D02 /* CustomBtn.swift in Sources */,
 				92A359182A9764AE00602586 /* SingleChatView.swift in Sources */,
 				924E5AA82A975EB0007E3D02 /* CustomCircularProfilePicture.swift in Sources */,
