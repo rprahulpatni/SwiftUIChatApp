@@ -29,11 +29,11 @@ class UserViewModel: ObservableObject {
 //        }
 //    }
     
-    func fetchUser() {
+    func fetchUser(_ uid: String?) {
         self.isLoading = true
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
         let usersRef = Database.database().reference().child("users")
-        usersRef.child(uid).observeSingleEvent(of: .value) { snapshot in
+        usersRef.child(uid ?? "").observeSingleEvent(of: .value) { snapshot in
             if let userInfo = snapshot.value as? [String: Any] {
                 // Access user information here
                 print("User Info: \(userInfo)")

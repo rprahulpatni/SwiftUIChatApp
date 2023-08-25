@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ChatListView: View {
-    @State var showNewChat: Bool = false
+    @State private var showNewChat: Bool = false
+    @State private var isUserListVisible: Bool = false
+    @State private var selectedUser: AuthUserData = AuthUserData()
     @StateObject private var viewModel = ChatListViewModel()
     @EnvironmentObject var sessionManager : SessionManager
 
@@ -40,11 +42,13 @@ struct ChatListView: View {
             }
             .navigationBarTitle("CHAT LIST", displayMode: .inline)
             .navigationDestination(isPresented: $showNewChat, destination:{
-                NewChatView()
+                let viewModel = SingleChatViewModel(iSessionManager: sessionManager, iChatUser: selectedUser)
+                SingleChatView(viewModel: viewModel)
             })
             .overlay(alignment: .bottomTrailing) {
                 Button(action: {
-                    showNewChat.toggle()
+                    //showNewChat.toggle()
+                    isUserListVisible.toggle()
                 }, label: {
                     Image(systemName: "plus")
                         .font(.title3)
@@ -55,12 +59,15 @@ struct ChatListView: View {
                 })
                 .padding(15)
             }
+            .fullScreenCover(isPresented: $isUserListVisible, content: {
+                NewChatView(selectedUser: $selectedUser, isUserListVisible: $isUserListVisible, showNewChat: $showNewChat)
+            })
         }
     }
 }
 
-struct ChatListView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatListView()
-    }
-}
+//struct ChatListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ChatListView()
+//    }
+//}

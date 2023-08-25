@@ -7,12 +7,18 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import CoreLocation
 
 struct ChatRow: View {
     var item: MessageModel
     var uid : String
     @State private var thumbnailImage: UIImage?
-    
+    @State private var isDetailScreenPresented = false
+    @State private var msgType: MessageType?
+    @State private var url: URL?
+    @State private var lat: Double? = 0.0
+    @State private var long: Double? = 0.0
+
     var body: some View {
         VStack{
             if item.senderId == uid {
@@ -27,6 +33,11 @@ struct ChatRow: View {
                             let imgUrl = URL(string: item.uploadedURL ?? "")
                             CustomSDWebImageView(imgURL: imgUrl, imgWidth: 250, imgHeight: 250, placeholderImage: StringConstants.placeholderImagePerson, isCircle: false, cornerRadius: 10)
                                 .modifier(chatModifier(myMessage: true))
+                                .onTapGesture {
+                                    self.msgType = .picture
+                                    self.url = URL(string: self.item.uploadedURL ?? "")
+                                    self.isDetailScreenPresented.toggle()
+                                }
                         case .video:
                             WebImage(url: nil).placeholder{
                                 ZStack(alignment: .center) {
@@ -36,7 +47,9 @@ struct ChatRow: View {
                                         .cornerRadius(10)
                                         .modifier(chatModifier(myMessage: true))
                                         .onTapGesture {
-                                            
+                                            self.msgType = .video
+                                            self.url = URL(string: self.item.uploadedURL ?? "")
+                                            self.isDetailScreenPresented.toggle()
                                         }
                                     Image(systemName: "play.circle.fill")
                                         .resizable()
@@ -49,7 +62,12 @@ struct ChatRow: View {
                                 .frame(width: 250, height: 250)
                                 .cornerRadius(10)
                                 .modifier(chatModifier(myMessage: true))
-                            
+                                .onTapGesture {
+                                    self.msgType = .location
+                                    self.lat = self.item.latitude ?? 0.0
+                                    self.long = self.item.longitude ?? 0.0
+                                    self.isDetailScreenPresented.toggle()
+                                }
                         case .none:
                             Text("Location")
                         }
@@ -71,8 +89,12 @@ struct ChatRow: View {
                             let imgUrl = URL(string: item.uploadedURL ?? "")
                             CustomSDWebImageView(imgURL: imgUrl, imgWidth: 250, imgHeight: 250, placeholderImage: StringConstants.placeholderImagePerson, isCircle: false, cornerRadius: 10)
                                 .modifier(chatModifier(myMessage: false))
+                                .onTapGesture {
+                                    self.msgType = .picture
+                                    self.url = URL(string: self.item.uploadedURL ?? "")
+                                    self.isDetailScreenPresented.toggle()
+                                }
                         case .video:
-//                            let imgUrl = URL(string: item.uploadedURL ?? "")?.generateThumbnail()
                             WebImage(url: nil).placeholder{
                                 ZStack(alignment: .center) {
                                     Image(uiImage: thumbnailImage ?? UIImage())
@@ -81,7 +103,9 @@ struct ChatRow: View {
                                         .cornerRadius(10)
                                         .modifier(chatModifier(myMessage: false))
                                         .onTapGesture {
-                                            
+                                            self.msgType = .video
+                                            self.url = URL(string: self.item.uploadedURL ?? "")
+                                            self.isDetailScreenPresented.toggle()
                                         }
                                     Image(systemName: "play.circle.fill")
                                         .resizable()
@@ -94,7 +118,12 @@ struct ChatRow: View {
                                 .frame(width: 250, height: 250)
                                 .cornerRadius(10)
                                 .modifier(chatModifier(myMessage: false))
-                            
+                                .onTapGesture {
+                                    self.msgType = .location
+                                    self.lat = self.item.latitude ?? 0.0
+                                    self.long = self.item.longitude ?? 0.0
+                                    self.isDetailScreenPresented.toggle()
+                                }
                         case .none:
                             Text("Location")
                         }
@@ -117,6 +146,9 @@ struct ChatRow: View {
                 }
             }
         }
+        .fullScreenCover(isPresented: $isDetailScreenPresented, content: {
+            ChatAttachmentDetailsView(lat: $lat, long: $long, url: $url, msgType: $msgType, isDetailScreenPresented: $isDetailScreenPresented)
+        })
     }
 }
 

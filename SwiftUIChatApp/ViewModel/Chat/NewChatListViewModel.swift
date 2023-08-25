@@ -14,6 +14,14 @@ import UIKit
 class NewChatListViewModel: ObservableObject {
     @Published var arrUsers : Array<AuthUserData> = Array<AuthUserData>()
     @Published var isLoading = false
+    @Published var searchText: String = ""
+
+    var filteredPost : [AuthUserData] {
+        guard !searchText.isEmpty else { return arrUsers }
+        return arrUsers.filter({ user in
+            user.name!.lowercased().contains(searchText.lowercased())
+        })
+    }
     
     func fetchUsersList() {
         self.isLoading = true

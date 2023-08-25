@@ -36,3 +36,25 @@ struct CustomSDWebImageView: View {
         .cornerRadius(isCircle == true ? imgHeight! / 2 : cornerRadius)
     }
 }
+
+struct ZoomableImageView: View {
+    @State private var scale: CGFloat = 1.0
+
+    var body: some View {
+        GeometryReader { geometry in
+            ScrollView([.horizontal, .vertical]) {
+                Image("your_image_name")
+                    .resizable()
+                    .scaledToFit()
+                    .scaleEffect(scale)
+                    .gesture(
+                        MagnificationGesture()
+                            .onChanged { value in
+                                scale = value.magnitude
+                            }
+                    )
+            }
+            .frame(width: geometry.size.width, height: geometry.size.height)
+        }
+    }
+}

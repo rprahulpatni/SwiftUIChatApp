@@ -18,36 +18,6 @@ class ChatListViewModel: ObservableObject {
 
     var toId:String!
     
-    func fetchDB() {
-        self.isLoading = true
-        let ref = Database.database().reference(withPath: "chats")
-        let userId = getUID()
-        
-        ref.observe(.value, with: { snapshot in
-            // This is the snapshot of the data at the moment in the Firebase database
-            // To get value from the snapshot, we user snapshot.value
-            self.arrUsers = []
-            if snapshot.exists() {
-                let dict:NSDictionary = snapshot.value as! NSDictionary
-                
-                for item in dict {
-                    let arrProjectID = (item.key as! String).components(separatedBy:"-")
-                    if arrProjectID[0] == userId || arrProjectID[1] == userId {
-                        if arrProjectID[0] != userId {
-                            self.toId = arrProjectID[0]
-                        } else {
-                            self.toId = arrProjectID[1]
-                        }
-//                        self.fetchUserFromMsg(uid: self.toID)
-                    }
-                }
-                self.isLoading = false
-            }else{
-                self.isLoading = false
-            }
-        })
-    }
-    
     func fetchMessages() {
         self.isLoading = true
         let fromId = getUID()
@@ -68,10 +38,7 @@ class ChatListViewModel: ObservableObject {
                                 self.toId = arrId[1]
                             }
                         }
-//                        let chatRoomId = fromId < toId ? "\(fromId)_\(toId ?? "")" : "\(toId ?? "")_\(fromId)"
-
                         if (arrId[0] == "\(self.toId ?? "")" && arrId[1] == "\(fromId)") || (arrId[0] == "\(fromId)" && arrId[1] == "\(self.toId ?? "")") {
-//                        if chatRoomId {
                             if let dictData = item.value as? [String: AnyObject] {
                                 if let value = dictData["metadata"]  as? [String: AnyObject] {
                                     for items in value {

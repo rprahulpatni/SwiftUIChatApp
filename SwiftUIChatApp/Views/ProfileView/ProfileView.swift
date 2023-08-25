@@ -19,7 +19,7 @@ struct ProfileView: View {
             VStack{
                 CustomUserForm(user: self.viewModel.user)
                     .onAppear(perform: {
-                        viewModel.fetchUser()
+                        viewModel.fetchUser(getUID())
                     })
                     //.modifier(CustomLoaderModifier(isLoading: self.$viewModel.isLoading))
             }.navigationBarTitle("PROFILE", displayMode: .inline)

@@ -11,13 +11,14 @@ import MapItemPicker
 
 struct SingleChatView: View {
     @FocusState private var showKeyboard: Bool
-    @StateObject private var viewModel : SingleChatViewModel
+    @State var showChatUserDetails: Bool = false
     @State private var isMenuOpen = false
     @State private var isImagePickerPresented = false
     @State private var isVideoPickerPresented = false
     @State private var isLocationPickerPresented = false
     @State private var selectedMsgType : MessageType = MessageType.text
     
+    @StateObject private var viewModel : SingleChatViewModel
     init(viewModel: SingleChatViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -26,9 +27,14 @@ struct SingleChatView: View {
         VStack {
             ChatScrollView
         }
-        .navigationBarTitle("Chat", displayMode: .inline)
+        .navigationBarTitle("", displayMode: .inline)
         .navigationBarBackButtonHidden()
-        .navigationBarItems(leading: CustomPopToRootButton())
+        .navigationBarItems(leading: CustomChatBackNUserButton(chatUser: self.viewModel.chatUser, userProfileButtonAction: {
+            self.showChatUserDetails.toggle()
+        }))
+        .navigationDestination(isPresented: $showChatUserDetails, destination:{
+            OtherUserProfileView(uid: self.viewModel.chatUser?.userId)
+        })
         .onAppear{
             self.viewModel.fetchMessages()
         }
@@ -72,6 +78,7 @@ struct SingleChatView: View {
             ScrollView(showsIndicators: false){
                 ScrollViewReader { scrollView in
                     VStack {
+                        Spacer(minLength: 20)
                         ForEach(self.viewModel.msgData, id: \.self) { item in
                             ChatRow(item: item, uid: getUID())
                         }

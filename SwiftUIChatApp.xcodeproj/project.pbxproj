@@ -80,6 +80,7 @@
 		92A3592B2A97652000602586 /* SingleChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359272A97652000602586 /* SingleChatViewModel.swift */; };
 		92A3592C2A97652000602586 /* NewChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359282A97652000602586 /* NewChatListViewModel.swift */; };
 		92A3592D2A97652000602586 /* ChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359292A97652000602586 /* ChatListViewModel.swift */; };
+		92A359312A978DEF00602586 /* ChatAttachmentDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359302A978DEF00602586 /* ChatAttachmentDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -151,6 +152,7 @@
 		92A359282A97652000602586 /* NewChatListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewChatListViewModel.swift; sourceTree = "<group>"; };
 		92A359292A97652000602586 /* ChatListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListViewModel.swift; sourceTree = "<group>"; };
 		92A3592E2A97668100602586 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		92A359302A978DEF00602586 /* ChatAttachmentDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAttachmentDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +267,7 @@
 				92A359162A9764AD00602586 /* SingleChatView.swift */,
 				92A3591A2A9764B500602586 /* NewChatView.swift */,
 				92A3591C2A9764BC00602586 /* ChatListView.swift */,
+				92A359302A978DEF00602586 /* ChatAttachmentDetailsView.swift */,
 			);
 			path = ChatView;
 			sourceTree = "<group>";
@@ -498,6 +501,7 @@
 				92A359192A9764AE00602586 /* ShareSheetView.swift in Sources */,
 				924E5A302A97526E007E3D02 /* SwiftUIChatAppApp.swift in Sources */,
 				92A3591D2A9764BC00602586 /* ChatListView.swift in Sources */,
+				92A359312A978DEF00602586 /* ChatAttachmentDetailsView.swift in Sources */,
 				92A3590B2A9763E300602586 /* LoginValidator.swift in Sources */,
 				92A359232A9764C500602586 /* UsersView.swift in Sources */,
 				924E5AA12A975EB0007E3D02 /* CircleImage.swift in Sources */,
