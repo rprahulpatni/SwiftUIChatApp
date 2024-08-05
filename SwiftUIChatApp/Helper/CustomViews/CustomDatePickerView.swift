@@ -26,12 +26,14 @@ struct CustomDatePickerView: View {
                 Spacer()
                 HStack {
                     Button("Cancel") {
+                        hideKeyboard()
                         isPickerVisible = false
                     }
                     Spacer()
                     Text(DateFormatter.longDateFormatter.string(from: self.selectedDate))
                     Spacer()
                     Button("Done") {
+                        hideKeyboard()
                         isPickerVisible = false
                         selectedDateString = DateFormatter.longDateFormatter.string(from: self.selectedDate)
                     }
@@ -47,6 +49,9 @@ struct CustomDatePickerView: View {
                     .frame(maxWidth: .infinity)
                     .background(Color(UIColor.systemBackground))
                     .hAlign(.center)
+            }
+            .onAppear{
+                hideKeyboard()
             }
             .onDisappear{
                 hideKeyboard()

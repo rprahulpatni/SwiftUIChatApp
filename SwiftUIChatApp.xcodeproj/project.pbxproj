@@ -60,6 +60,7 @@
 		924E5AB42A975EB8007E3D02 /* CustomLoaderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E5AB02A975EB8007E3D02 /* CustomLoaderModifier.swift */; };
 		924E5AB52A975EB8007E3D02 /* NavigationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E5AB12A975EB8007E3D02 /* NavigationUtils.swift */; };
 		924E5AB82A97614C007E3D02 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 924E5AB72A97614C007E3D02 /* GoogleService-Info.plist */; };
+		928261DC2AD53B3000963A89 /* LoginValidationUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928261DB2AD53B3000963A89 /* LoginValidationUnitTest.swift */; };
 		92A359042A9763D200602586 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359032A9763D200602586 /* SessionManager.swift */; };
 		92A359062A9763D900602586 /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359052A9763D900602586 /* LocalDataManager.swift */; };
 		92A3590A2A9763E300602586 /* SignUpValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359072A9763E300602586 /* SignUpValidator.swift */; };
@@ -81,7 +82,20 @@
 		92A3592C2A97652000602586 /* NewChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359282A97652000602586 /* NewChatListViewModel.swift */; };
 		92A3592D2A97652000602586 /* ChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359292A97652000602586 /* ChatListViewModel.swift */; };
 		92A359312A978DEF00602586 /* ChatAttachmentDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A359302A978DEF00602586 /* ChatAttachmentDetailsView.swift */; };
+		92C53B4A2C60D6D600D46B37 /* SignUpValidationUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C53B492C60D6D600D46B37 /* SignUpValidationUnitTest.swift */; };
+		92C53B4C2C60DC8800D46B37 /* EditProfileValidationUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C53B4B2C60DC8800D46B37 /* EditProfileValidationUnitTest.swift */; };
+		92C53B4E2C60DF5900D46B37 /* LoginViewModelUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C53B4D2C60DF5900D46B37 /* LoginViewModelUnitTest.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		928261D62AD53AE800963A89 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 924E5A242A97526E007E3D02 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 924E5A2B2A97526E007E3D02;
+			remoteInfo = SwiftUIChatApp;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		924E5A2C2A97526E007E3D02 /* SwiftUIChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +145,8 @@
 		924E5AB02A975EB8007E3D02 /* CustomLoaderModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLoaderModifier.swift; sourceTree = "<group>"; };
 		924E5AB12A975EB8007E3D02 /* NavigationUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationUtils.swift; sourceTree = "<group>"; };
 		924E5AB72A97614C007E3D02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		928261D22AD53AE800963A89 /* SwiftUIChatAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUIChatAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		928261DB2AD53B3000963A89 /* LoginValidationUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginValidationUnitTest.swift; sourceTree = "<group>"; };
 		92A359032A9763D200602586 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		92A359052A9763D900602586 /* LocalDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
 		92A359072A9763E300602586 /* SignUpValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpValidator.swift; sourceTree = "<group>"; };
@@ -153,6 +169,9 @@
 		92A359292A97652000602586 /* ChatListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListViewModel.swift; sourceTree = "<group>"; };
 		92A3592E2A97668100602586 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		92A359302A978DEF00602586 /* ChatAttachmentDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAttachmentDetailsView.swift; sourceTree = "<group>"; };
+		92C53B492C60D6D600D46B37 /* SignUpValidationUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpValidationUnitTest.swift; sourceTree = "<group>"; };
+		92C53B4B2C60DC8800D46B37 /* EditProfileValidationUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileValidationUnitTest.swift; sourceTree = "<group>"; };
+		92C53B4D2C60DF5900D46B37 /* LoginViewModelUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelUnitTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +190,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		928261CF2AD53AE800963A89 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -178,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				924E5A2E2A97526E007E3D02 /* SwiftUIChatApp */,
+				928261D32AD53AE800963A89 /* SwiftUIChatAppTests */,
 				924E5A2D2A97526E007E3D02 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -186,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				924E5A2C2A97526E007E3D02 /* SwiftUIChatApp.app */,
+				928261D22AD53AE800963A89 /* SwiftUIChatAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -361,6 +389,17 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		928261D32AD53AE800963A89 /* SwiftUIChatAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				928261DB2AD53B3000963A89 /* LoginValidationUnitTest.swift */,
+				92C53B492C60D6D600D46B37 /* SignUpValidationUnitTest.swift */,
+				92C53B4B2C60DC8800D46B37 /* EditProfileValidationUnitTest.swift */,
+				92C53B4D2C60DF5900D46B37 /* LoginViewModelUnitTest.swift */,
+			);
+			path = SwiftUIChatAppTests;
+			sourceTree = "<group>";
+		};
 		92A3591E2A9764C500602586 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -423,6 +462,24 @@
 			productReference = 924E5A2C2A97526E007E3D02 /* SwiftUIChatApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		928261D12AD53AE800963A89 /* SwiftUIChatAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 928261D82AD53AE800963A89 /* Build configuration list for PBXNativeTarget "SwiftUIChatAppTests" */;
+			buildPhases = (
+				928261CE2AD53AE800963A89 /* Sources */,
+				928261CF2AD53AE800963A89 /* Frameworks */,
+				928261D02AD53AE800963A89 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				928261D72AD53AE800963A89 /* PBXTargetDependency */,
+			);
+			name = SwiftUIChatAppTests;
+			productName = SwiftUIChatAppTests;
+			productReference = 928261D22AD53AE800963A89 /* SwiftUIChatAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -435,6 +492,10 @@
 				TargetAttributes = {
 					924E5A2B2A97526E007E3D02 = {
 						CreatedOnToolsVersion = 14.3.1;
+					};
+					928261D12AD53AE800963A89 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 924E5A2B2A97526E007E3D02;
 					};
 				};
 			};
@@ -457,6 +518,7 @@
 			projectRoot = "";
 			targets = (
 				924E5A2B2A97526E007E3D02 /* SwiftUIChatApp */,
+				928261D12AD53AE800963A89 /* SwiftUIChatAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -473,6 +535,13 @@
 				924E5A7D2A975E15007E3D02 /* VideoData.json in Resources */,
 				924E5AB82A97614C007E3D02 /* GoogleService-Info.plist in Resources */,
 				924E5A342A975270007E3D02 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		928261D02AD53AE800963A89 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,7 +614,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		928261CE2AD53AE800963A89 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92C53B4E2C60DF5900D46B37 /* LoginViewModelUnitTest.swift in Sources */,
+				92C53B4A2C60D6D600D46B37 /* SignUpValidationUnitTest.swift in Sources */,
+				928261DC2AD53B3000963A89 /* LoginValidationUnitTest.swift in Sources */,
+				92C53B4C2C60DC8800D46B37 /* EditProfileValidationUnitTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		928261D72AD53AE800963A89 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 924E5A2B2A97526E007E3D02 /* SwiftUIChatApp */;
+			targetProxy = 928261D62AD53AE800963A89 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		924E5A392A975270007E3D02 /* Debug */ = {
@@ -729,6 +817,45 @@
 			};
 			name = Release;
 		};
+		928261D92AD53AE800963A89 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Neosoft.SwiftUIChatAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftUIChatApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SwiftUIChatApp";
+			};
+			name = Debug;
+		};
+		928261DA2AD53AE800963A89 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Neosoft.SwiftUIChatAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftUIChatApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SwiftUIChatApp";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -746,6 +873,15 @@
 			buildConfigurations = (
 				924E5A3C2A975270007E3D02 /* Debug */,
 				924E5A3D2A975270007E3D02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		928261D82AD53AE800963A89 /* Build configuration list for PBXNativeTarget "SwiftUIChatAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				928261D92AD53AE800963A89 /* Debug */,
+				928261DA2AD53AE800963A89 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

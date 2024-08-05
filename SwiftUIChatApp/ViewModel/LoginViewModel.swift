@@ -30,7 +30,7 @@ class LoginViewModel: ObservableObject {
     func login() {
         self.isLoading = true
         hideKeyboard()
-        let validationResult = LoginValidations().validateUser(userEmail: self.email, password: self.password)
+        let validationResult = LoginValidator().validateUser(userEmail: self.email, password: self.password)
         switch validationResult {
         case .success:
             sessionManager?.action_Login(self.email, self.password) { [weak self] (success, error, result) in

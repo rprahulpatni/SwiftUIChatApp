@@ -65,8 +65,8 @@ struct SignUpView: View {
                         .keyboardType(.emailAddress)
                         .padding(.bottom, 5)
                         .onTapGesture {
-                            isDatePickerVisible = true
                             hideKeyboard()
+                            isDatePickerVisible = true
                         }
                         .onDisappear {
                             hideKeyboard()

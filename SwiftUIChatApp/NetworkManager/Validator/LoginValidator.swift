@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct LoginValidations {
+struct LoginValidator {
     func validateUser(userEmail: String, password: String) -> ValidationResult {
         guard userEmail.isNotEmpty else {
             return .failure(StringConstants.LoginSignUp.userEmailBlank)

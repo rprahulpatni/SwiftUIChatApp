@@ -6,30 +6,65 @@
 //
 
 import XCTest
+@testable import SwiftUIChatApp
 
 final class SignUpValidationUnitTest: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    var validation: SignUpValidator!
+    
+    override func setUp() {
+        super.setUp()
+        self.validation = SignUpValidator()
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    override func tearDown() {
+        super.tearDown()
+        self.validation = nil
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    func testEmptyName(){
+        let result = self.validation.validateUser(userName: "", userEmail: "", userCountryCode: "", userMobile: "", userDOB: "", password: "", confirmPassword: "")
+        XCTAssertEqual(result, .failure(StringConstants.LoginSignUp.userNameBlank))
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testEmptyEmail(){
+        let result = self.validation.validateUser(userName: "R P", userEmail: "", userCountryCode: "", userMobile: "", userDOB: "", password: "", confirmPassword: "")
+        XCTAssertEqual(result, .failure(StringConstants.LoginSignUp.userEmailBlank))
     }
-
+    func testValidEmail(){
+        let result = self.validation.validateUser(userName: "R P", userEmail: "invalid", userCountryCode: "", userMobile: "", userDOB: "", password: "", confirmPassword: "")
+        XCTAssertEqual(result, .failure(StringConstants.LoginSignUp.userEmailValid))
+    }
+    func testEmptyCountryCode(){
+        let result = self.validation.validateUser(userName: "R P", userEmail: "rp@mailinator.com", userCountryCode: "", userMobile: "", userDOB: "", password: "", confirmPassword: "")
+        XCTAssertEqual(result, .failure(StringConstants.LoginSignUp.userCountryCodeBlank))
+    }
+    func testEmptyMobile(){
+        let result = self.validation.validateUser(userName: "R P", userEmail: "rp@mailinator.com", userCountryCode: "+91", userMobile: "", userDOB: "", password: "", confirmPassword: "")
+        XCTAssertEqual(result, .failure(StringConstants.LoginSignUp.userMobileBlank))
+    }
+    func testValidMobile(){
+        let result = self.validation.validateUser(userName: "R P", userEmail: "rp@mailinator.com", userCountryCode: "+91", userMobile: "123456", userDOB: "", password: "", confirmPassword: "")
+        XCTAssertEqual(result, .failure(StringConstants.LoginSignUp.userMobileValid))
+    }
+    func testEmptyDOB(){
+        let result = self.validation.validateUser(userName: "R P", userEmail: "rp@mailinator.com", userCountryCode: "+91", userMobile: "9876543210", userDOB: "", password: "", confirmPassword: "")
+        XCTAssertEqual(result, .failure(StringConstants.LoginSignUp.userDOBBlank))
+    }
+    func testEmptyPassword(){
+        let result = self.validation.validateUser(userName: "R P", userEmail: "rp@mailinator.com", userCountryCode: "+91", userMobile: "9876543210", userDOB: "April 1, 1994", password: "", confirmPassword: "")
+        XCTAssertEqual(result, .failure(StringConstants.LoginSignUp.passwordBlank))
+    }
+    func testEmptyConfirmPassword(){
+        let result = self.validation.validateUser(userName: "R P", userEmail: "rp@mailinator.com", userCountryCode: "+91", userMobile: "9876543210", userDOB: "April 1, 1994", password: "password", confirmPassword: "")
+        XCTAssertEqual(result, .failure(StringConstants.LoginSignUp.confirmPasswordBlank))
+    }
+    func testPasswordConfirmMisMatch(){
+        let result = self.validation.validateUser(userName: "R P", userEmail: "rp@mailinator.com", userCountryCode: "+91", userMobile: "9876543210", userDOB: "April 1, 1994", password: "password", confirmPassword: "password12")
+        XCTAssertEqual(result, .failure(StringConstants.LoginSignUp.confirmPasswordMatch))
+    }
+    func testPasswordConfirmMatch(){
+        let result = self.validation.validateUser(userName: "R P", userEmail: "rp@mailinator.com", userCountryCode: "+91", userMobile: "9876543210", userDOB: "April 1, 1994", password: "password", confirmPassword: "password")
+        XCTAssertEqual(result, .success)
+    }
 }
+
